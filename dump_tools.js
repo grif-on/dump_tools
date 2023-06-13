@@ -35,7 +35,6 @@ const strip_off_all_default_values = tiled.registerAction("Strip off all default
                     current_layer.objects.forEach(function (processedObject) {
                         let originalProperties = processedObject.properties();
                         for (const [key, value] of Object.entries(originalProperties)) {
-                            tiled.log(typeof (value))
                             if (typeof (value) === "object" && value.toString().charAt(0) == "#" && value.toString().length == 7) continue //skip colors objects
                             processedObject.removeProperty(key); // remove property
                             let defaultProperty = processedObject.resolvedProperty(key)
