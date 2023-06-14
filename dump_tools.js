@@ -177,7 +177,7 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     \n\
     =====Remove engine built-in properties (objects)=====\n\
     This tool will itterate over all your objects and delete this list of properties [xprevious, yprevious, xstart, ystart, alarm, depth, sprite_index, image_alpha, image_angle, image_blend, image_index, image_speed, mask_index, sprite_width, sprite_height, sprite_xoffset, sprite_yoffset, image_number, bbox_bottom, bbox_left, bbox_right, bbox_top ] .\n\
-    In most cases you don't need them , their role is to be just an helpfull information in the game full dump .\n\
+    In most cases you don't need them , their role is to be just an helpfull information in the game full dump . But you can use this tool to remove direction property from all objects .\n\
     \n\
     =====Remove !!!non_json!!! properties (objects and global)=====\n\
     This tool will itterate over all your objects and delete any property wich ends with one of following [!!!ARRAY!!!, !!!UNDEFINED!!!, !!!INFINITY!!!, !!!NAN!!!, !!!STRUCT!!!, !!!METHOD!!!, !!!UNKNOWN!!!] .\n\
