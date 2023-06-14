@@ -117,3 +117,33 @@ tiled.extendMenu("Map", [
     { separator: true },
     { action: "Remove engine built-in properties (objects)", before: "Close" }
 ]);
+
+
+
+const about_dump_tools = tiled.registerAction("About dump tools", function () {
+    let message = "\t     \"Dump tools\" by Grif_on .\n\
+    Main purpose of thous tools is to automatize work with D'LIRIUM dubug/dump files .\n\
+    But even if you made your map from scratch , you may found them useful .\n\
+    \n\
+    =====Remove properties with default values (objects)=====\n\
+    This tool will itterate over all your objects and delete every property with same values as in object types .\n\
+    Simply say - it will turn all dark properties in to grey if such property have default value .\n\
+    Note , colors and enum properties are not affected .\n\
+    \n\
+    =====Remove engine built-in properties (objects)=====\n\
+    This tool will itterate over all your objects and delete this list of properties [xprevious, yprevious, xstart, ystart, alarm, depth, sprite_index, image_alpha, image_angle, image_blend, image_index, image_speed, mask_index, sprite_width, sprite_height, sprite_xoffset, sprite_yoffset, image_number, bbox_bottom, bbox_left, bbox_right, bbox_top ] .\n\
+    In most cases you don't need them , their role is to be just an helpfull information in the game full dump .\n\
+    \n\
+    Github page of this script - https://github.com/grif-on/dump_tools .\n\n\
+    This message also printed in to tiled console log .";
+    tiled.log("=".repeat(123) + "\n" + message + "\n" + "=".repeat(123));
+    tiled.alert(message, "About dump tools");
+})
+
+about_dump_tools.text = "About dump tools";
+// about_dump_tools.icon = "ext:icon.png";
+
+tiled.extendMenu("Map", [
+    { separator: true },
+    { action: "About dump tools", before: "Close" }
+]);
