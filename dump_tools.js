@@ -56,3 +56,64 @@ tiled.extendMenu("Map", [
     { separator: true },
     { action: "Remove properties with default values (objects)", before: "Close" }
 ]);
+
+
+
+const remove_builtins_from_objects = tiled.registerAction("Remove engine built-in properties (objects)", function () {
+    let map = tiled.activeAsset;
+    map.macro("Remove engine built-in properties (objects)", function () {
+        let remove_speed_and_direction = tiled.confirm("Remove speed and direction properties too ? Direction is used as is by some objects (e.g. player and monsters will look only on right without it) !","Full clear ?")
+        for (let i = 0; i < map.layerCount; i++) {
+            current_layer = map.layerAt(i);
+            if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
+                if (current_layer.objects != null) {                    //на случай , если слой не будет иметь объектов вообще
+                    current_layer.objects.forEach(function (processedObject) {
+                        let properties = processedObject.properties();
+                        for (const [key, value] of Object.entries(properties)) {
+                            switch (key) {
+                                case "xprevious":
+                                case "yprevious":
+                                case "xstart":
+                                case "ystart":
+                                case "alarm":
+                                case "depth":
+                                case "sprite_index":
+                                case "image_alpha":
+                                case "image_angle":
+                                case "image_blend":
+                                case "image_index":
+                                case "image_speed":
+                                case "mask_index":
+                                case "sprite_width":
+                                case "sprite_height":
+                                case "sprite_xoffset":
+                                case "sprite_yoffset":
+                                case "image_number":
+                                case "bbox_bottom":
+                                case "bbox_left":
+                                case "bbox_right":
+                                case "bbox_top":
+                                    processedObject.removeProperty(key);
+                                    break;
+                                case "direction":
+                                case "speed":
+                                    if (remove_speed_and_direction) processedObject.removeProperty(key);
+                                    break;                          
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    });
+})
+
+remove_builtins_from_objects.text = "Remove engine built-in properties (objects)";
+// remove_builtins_from_objects.icon = "ext:icon.png";
+
+tiled.extendMenu("Map", [
+    { separator: true },
+    { action: "Remove engine built-in properties (objects)", before: "Close" }
+]);
