@@ -120,6 +120,51 @@ tiled.extendMenu("Map", [
 
 
 
+const remove_non_json_values_from_objects_and_global = tiled.registerAction("Remove !!!non_json!!! properties (objects and global)", function () {
+    let map = tiled.activeAsset;
+    map.macro("Remove !!!non_json!!! properties (objects and global)", function () {
+        for (let i = 0; i < map.layerCount; i++) {
+            current_layer = map.layerAt(i);
+            if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
+                if (current_layer.objects != null) {                    //на случай , если слой не будет иметь объектов вообще
+                    current_layer.objects.forEach(function (processedObject) {
+                        let properties = processedObject.properties();
+                        for (const [key, value] of Object.entries(properties)) {
+                            if (key.endsWith("!!!ARRAY!!!")) processedObject.removeProperty(key);
+                            if (key.endsWith("!!!UNDEFINED!!!")) processedObject.removeProperty(key);
+                            if (key.endsWith("!!!INFINITY!!!")) processedObject.removeProperty(key);
+                            if (key.endsWith("!!!NAN!!!")) processedObject.removeProperty(key);
+                            if (key.endsWith("!!!STRUCT!!!")) processedObject.removeProperty(key);
+                            if (key.endsWith("!!!METHOD!!!")) processedObject.removeProperty(key);
+                            if (key.endsWith("!!!UNKNOWN!!!")) processedObject.removeProperty(key);
+                        }
+                    });
+                }
+            }
+        }
+        let properties = map.properties();
+        for (const [key, value] of Object.entries(properties)) {
+            if (key.endsWith("!!!ARRAY!!!")) map.removeProperty(key);
+            if (key.endsWith("!!!UNDEFINED!!!")) map.removeProperty(key);
+            if (key.endsWith("!!!INFINITY!!!")) map.removeProperty(key);
+            if (key.endsWith("!!!NAN!!!")) map.removeProperty(key);
+            if (key.endsWith("!!!STRUCT!!!")) map.removeProperty(key);
+            if (key.endsWith("!!!METHOD!!!")) map.removeProperty(key);
+            if (key.endsWith("!!!UNKNOWN!!!")) map.removeProperty(key);
+        }
+    });
+})
+
+remove_non_json_values_from_objects_and_global.text = "Remove !!!non_json!!! properties (objects and global)";
+// remove_non_json_values_from_objects_and_global.icon = "ext:icon.png";
+
+tiled.extendMenu("Map", [
+    { separator: true },
+    { action: "Remove !!!non_json!!! properties (objects and global)", before: "Close" }
+]);
+
+
+
 const about_dump_tools = tiled.registerAction("About dump tools", function () {
     let message = "\t     \"Dump tools\" by Grif_on .\n\
     Main purpose of thous tools is to automatize work with D'LIRIUM dubug/dump files .\n\
@@ -133,6 +178,10 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     =====Remove engine built-in properties (objects)=====\n\
     This tool will itterate over all your objects and delete this list of properties [xprevious, yprevious, xstart, ystart, alarm, depth, sprite_index, image_alpha, image_angle, image_blend, image_index, image_speed, mask_index, sprite_width, sprite_height, sprite_xoffset, sprite_yoffset, image_number, bbox_bottom, bbox_left, bbox_right, bbox_top ] .\n\
     In most cases you don't need them , their role is to be just an helpfull information in the game full dump .\n\
+    \n\
+    =====Remove !!!non_json!!! properties (objects and global)=====\n\
+    This tool will itterate over all your objects and delete any property wich ends with one of following [!!!ARRAY!!!, !!!UNDEFINED!!!, !!!INFINITY!!!, !!!NAN!!!, !!!STRUCT!!!, !!!METHOD!!!, !!!UNKNOWN!!!] .\n\
+    Your map will never (and should not) have this properties , they appear only in full dump that created when game crashed . They have string type and altered names because tiled map format didn't support any of them .\n\
     \n\
     Github page of this script - https://github.com/grif-on/dump_tools .\n\n\
     This message also printed in to tiled console log .";
