@@ -25,9 +25,9 @@ SOFTWARE.
 
 //Intended for use in Tiled 1.8.6
 
-const strip_off_all_default_values = tiled.registerAction("Strip off all default values", function () {
+const remove_defaults_from_objects = tiled.registerAction("Remove properties with default values (objects)", function () {
     let map = tiled.activeAsset;
-    map.macro("Strip off all default values", function () {
+    map.macro("Remove properties with default values (objects)", function () {
         for (let i = 0; i < map.layerCount; i++) {
             current_layer = map.layerAt(i);
             if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
@@ -49,10 +49,10 @@ const strip_off_all_default_values = tiled.registerAction("Strip off all default
     });
 })
 
-strip_off_all_default_values.text = "Strip off all default values";
-// strip_off_all_default_values.icon = "ext:icon.png";
+remove_defaults_from_objects.text = "Remove properties with default values (objects)";
+// remove_defaults_from_objects.icon = "ext:icon.png";
 
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "Strip off all default values", before: "Close" }
+    { action: "Remove properties with default values (objects)", before: "Close" }
 ]);
