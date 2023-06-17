@@ -25,6 +25,34 @@ SOFTWARE.
 
 //Intended for use in Tiled 1.8.6
 
+
+
+const make_all_objects_visible = tiled.registerAction("Make all objects visible", function () {
+    let map = tiled.activeAsset;
+    map.macro("Make all objects visible", function () {
+        for (let i = 0; i < map.layerCount; i++) {
+            current_layer = map.layerAt(i);
+            if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
+                if (current_layer.objects != null) {                    //на случай , если слой не будет иметь объектов вообще
+                    current_layer.objects.forEach(function (processedObject) {
+                        processedObject.visible = true;
+                    });
+                }
+            }
+        }
+    });
+})
+
+make_all_objects_visible.text = "Make all objects visible";
+// make_all_objects_visible.icon = "ext:icon.png";
+
+tiled.extendMenu("Map", [
+    { separator: true },
+    { action: "Make all objects visible", before: "Close" }
+]);
+
+
+
 const remove_defaults_from_objects = tiled.registerAction("Remove properties with default values (objects)", function () {
     let map = tiled.activeAsset;
     map.macro("Remove properties with default values (objects)", function () {
@@ -169,6 +197,9 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     let message = "\t     \"Dump tools\" by Grif_on .\n\
     Main purpose of thous tools is to automatize work with D'LIRIUM dubug/dump files .\n\
     But even if you made your map from scratch , you may found them useful .\n\
+    \n\
+    =====Make all objects visible=====\n\
+    This tool is only for objects , however please keep in mind that layers have sepparate visible property too .\n\
     \n\
     =====Remove properties with default values (objects)=====\n\
     This tool will itterate over all your objects and delete every property with same values as in object types .\n\
