@@ -66,7 +66,7 @@ const remove_defaults_from_objects = tiled.registerAction("Remove properties wit
                             if (typeof (value) === "object" && value.toString().charAt(0) == "#" && value.toString().length == 7) continue //skip colors objects
                             processedObject.removeProperty(key); // remove property
                             let defaultProperty = processedObject.resolvedProperty(key)
-                            if (defaultProperty !== value) {
+                            if (!(defaultProperty === value || ((typeof(defaultProperty) === "object") && defaultProperty.value === value))) {
                                 processedObject.setProperty(key, value); //return property back only if it has non-default value
                             }
                         }
@@ -204,7 +204,7 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     =====Remove properties with default values (objects)=====\n\
     This tool will itterate over all your objects and delete every property with same values as in object types .\n\
     Simply say - it will turn all dark properties in to grey if such property have default value .\n\
-    Note , colors and enum properties are not affected .\n\
+    Note , colors properties are not affected .\n\
     \n\
     =====Remove engine built-in properties (objects)=====\n\
     This tool will itterate over all your objects and delete this list of properties [xprevious, yprevious, xstart, ystart, alarm, depth, sprite_index, image_alpha, image_angle, image_blend, image_index, image_speed, mask_index, sprite_width, sprite_height, sprite_xoffset, sprite_yoffset, image_number, bbox_bottom, bbox_left, bbox_right, bbox_top ] .\n\
