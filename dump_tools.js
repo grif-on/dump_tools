@@ -44,7 +44,7 @@ const make_all_objects_visible = tiled.registerAction("Make all objects visible"
 })
 
 make_all_objects_visible.text = "Make all objects visible";
-// make_all_objects_visible.icon = "ext:icon.png";
+make_all_objects_visible.icon = "ext:eye.png";
 
 tiled.extendMenu("Map", [
     { separator: true },
@@ -78,7 +78,7 @@ const remove_defaults_from_objects = tiled.registerAction("Remove properties wit
 })
 
 remove_defaults_from_objects.text = "Remove properties with default values (objects)";
-// remove_defaults_from_objects.icon = "ext:icon.png";
+remove_defaults_from_objects.icon = "ext:aaaaaaaaa.png";
 
 tiled.extendMenu("Map", [
     { separator: true },
@@ -139,7 +139,7 @@ const remove_builtins_from_objects = tiled.registerAction("Remove engine built-i
 })
 
 remove_builtins_from_objects.text = "Remove engine built-in properties (objects)";
-// remove_builtins_from_objects.icon = "ext:icon.png";
+remove_builtins_from_objects.icon = "ext:aaaaaaaaa.png";
 
 tiled.extendMenu("Map", [
     { separator: true },
@@ -184,7 +184,7 @@ const remove_non_json_values_from_objects_and_global = tiled.registerAction("Rem
 })
 
 remove_non_json_values_from_objects_and_global.text = "Remove !!!non_json!!! properties (objects and global)";
-// remove_non_json_values_from_objects_and_global.icon = "ext:icon.png";
+remove_non_json_values_from_objects_and_global.icon = "ext:aaaaaaaaa.png";
 
 tiled.extendMenu("Map", [
     { separator: true },
@@ -221,7 +221,7 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
 })
 
 about_dump_tools.text = "About dump tools";
-// about_dump_tools.icon = "ext:icon.png";
+about_dump_tools.icon = "ext:about.png";
 
 tiled.extendMenu("Map", [
     { separator: true },
