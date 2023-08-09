@@ -81,7 +81,6 @@ remove_defaults_from_objects.text = "Remove properties with default values (obje
 remove_defaults_from_objects.icon = "ext:aaaaaaaaa.png";
 
 tiled.extendMenu("Map", [
-    { separator: true },
     { action: "Remove properties with default values (objects)", before: "SelectNextTileset" }
 ]);
 
@@ -142,7 +141,6 @@ remove_builtins_from_objects.text = "Remove engine built-in properties (objects)
 remove_builtins_from_objects.icon = "ext:aaaaaaaaa.png";
 
 tiled.extendMenu("Map", [
-    { separator: true },
     { action: "Remove engine built-in properties (objects)", before: "SelectNextTileset" }
 ]);
 
@@ -187,7 +185,6 @@ remove_non_json_values_from_objects_and_global.text = "Remove !!!non_json!!! pro
 remove_non_json_values_from_objects_and_global.icon = "ext:aaaaaaaaa.png";
 
 tiled.extendMenu("Map", [
-    { separator: true },
     { action: "Remove !!!non_json!!! properties (objects and global)", before: "SelectNextTileset" }
 ]);
 
@@ -224,6 +221,6 @@ about_dump_tools.text = "About dump tools";
 about_dump_tools.icon = "ext:about.png";
 
 tiled.extendMenu("Map", [
-    { separator: true },
-    { action: "About dump tools", before: "SelectNextTileset" }
+    { action: "About dump tools", before: "SelectNextTileset" },
+    { separator: true }
 ]);
