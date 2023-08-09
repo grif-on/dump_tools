@@ -48,7 +48,7 @@ make_all_objects_visible.text = "Make all objects visible";
 
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "Make all objects visible", before: "Close" }
+    { action: "Make all objects visible", before: "SelectNextTileset" }
 ]);
 
 
@@ -82,7 +82,7 @@ remove_defaults_from_objects.text = "Remove properties with default values (obje
 
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "Remove properties with default values (objects)", before: "Close" }
+    { action: "Remove properties with default values (objects)", before: "SelectNextTileset" }
 ]);
 
 
@@ -143,7 +143,7 @@ remove_builtins_from_objects.text = "Remove engine built-in properties (objects)
 
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "Remove engine built-in properties (objects)", before: "Close" }
+    { action: "Remove engine built-in properties (objects)", before: "SelectNextTileset" }
 ]);
 
 
@@ -188,7 +188,7 @@ remove_non_json_values_from_objects_and_global.text = "Remove !!!non_json!!! pro
 
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "Remove !!!non_json!!! properties (objects and global)", before: "Close" }
+    { action: "Remove !!!non_json!!! properties (objects and global)", before: "SelectNextTileset" }
 ]);
 
 
@@ -225,5 +225,5 @@ about_dump_tools.text = "About dump tools";
 
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "About dump tools", before: "Close" }
+    { action: "About dump tools", before: "SelectNextTileset" }
 ]);
