@@ -63,10 +63,19 @@ const remove_defaults_from_objects = tiled.registerAction("Remove properties wit
                     current_layer.objects.forEach(function (processedObject) {
                         let originalProperties = processedObject.properties();
                         for (const [key, value] of Object.entries(originalProperties)) {
-                            if (typeof (value) === "object" && value.toString().charAt(0) == "#" && value.toString().length == 7) continue //skip colors objects
+                            let return_it = false;
+
                             processedObject.removeProperty(key); // remove property
                             let defaultProperty = processedObject.resolvedProperty(key)
-                            if (!(defaultProperty === value || ((typeof(defaultProperty) === "object") && defaultProperty.value === value))) {
+                            if (typeof (value) === "object" && value.toString().charAt(0) == "#" && value.toString().length == 7) return_it = true //skip colors objects
+                            if (typeof (defaultProperty) === "object" && defaultProperty.toString().charAt(0) == "#" && defaultProperty.toString().length == 7) return_it = true //skip properties that by default are colors objects
+                            // if (key === "e_sort_method") {
+                            //     tiled.log("value = " + value);
+                            //     tiled.log("value.value = " + value.value);
+                            //     tiled.log("defaultProperty = " + defaultProperty);
+                            //     tiled.log("defaultProperty.value = " + defaultProperty.value);
+                            // }
+                            if (return_it || (!(defaultProperty === value || ((typeof (defaultProperty) === "object") && (defaultProperty.value === value || defaultProperty.value === value.value))))) {
                                 processedObject.setProperty(key, value); //return property back only if it has non-default value
                             }
                         }
