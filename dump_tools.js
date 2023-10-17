@@ -165,7 +165,7 @@ const remove_builtins_from_objects = tiled.registerAction("Remove engine built-i
                                 case "direction":
                                 case "speed":
                                     if (remove_speed_and_direction) processedObject.removeProperty(key);
-                                    break;                          
+                                    break;
                                 default:
                                     break;
                             }
@@ -230,6 +230,38 @@ tiled.extendMenu("Map", [
 
 
 
+const select_all_objects_with_not_classic_sorts = tiled.registerAction("Select all objects with non classic sorts", function () {
+    let map = tiled.activeAsset;
+    for (let i = 0; i < map.layerCount; i++) {
+        current_layer = map.layerAt(i);
+        if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
+            if (current_layer.objects != null) {                    //на случай , если слой не будет иметь объектов вообще
+                current_layer.objects.forEach(function (processedObject) {
+                    let properties = processedObject.properties();
+                    for (const [key, value] of Object.entries(properties)) {
+                        if (key === "e_sort_method") {
+                            if (typeof (value) === "object") {
+                                if (value.value !== 0) processedObject.selected = true;
+                            } else {
+                                if (value !== 0) processedObject.selected = true;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+})
+
+select_all_objects_with_not_classic_sorts.text = "Select all objects with non classic sorts";
+select_all_objects_with_not_classic_sorts.icon = "ext:aaaaaaaaa.png";
+
+tiled.extendMenu("Map", [
+    { action: "Select all objects with non classic sorts", before: "SelectNextTileset" }
+]);
+
+
+
 const about_dump_tools = tiled.registerAction("About dump tools", function () {
     let message = "\t     \"Dump tools\" by Grif_on .\n\
     Main purpose of thous tools is to automatize work with D'LIRIUM dubug/dump files .\n\
@@ -254,6 +286,10 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     =====Remove !!!non_json!!! properties (objects and global)=====\n\
     This tool will itterate over all your objects and delete any property wich ends with one of following [!!!ARRAY!!!, !!!UNDEFINED!!!, !!!INFINITY!!!, !!!NAN!!!, !!!STRUCT!!!, !!!METHOD!!!, !!!UNKNOWN!!!] .\n\
     Your map will never (and should not) have this properties , they appear only in full dump that created when game crashed . They have string type and altered names because tiled map format didn't support any of them .\n\
+    \n\
+    =====Select all objects with non classic sorts=====\n\
+    This tool will itterate over all your objects and select objects that have e_sort_method != \"No Sorting\" (or e_sort_method != 0) .\n\
+    Note - your previous selection is not cleared .\n\
     \n\
     Github page of this script - https://github.com/grif-on/dump_tools .\n\n\
     This message also printed in to tiled console log .";
