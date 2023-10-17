@@ -98,7 +98,7 @@ tiled.extendMenu("Map", [
 const remove_builtins_from_objects = tiled.registerAction("Remove engine built-in properties (objects)", function () {
     let map = tiled.activeAsset;
     map.macro("Remove engine built-in properties (objects)", function () {
-        let remove_speed_and_direction = tiled.confirm("Remove speed and direction properties too ? Direction is used as is by some objects (e.g. player and monsters will look only on right without it) !","Full clear ?")
+        let remove_speed_and_direction = tiled.confirm("Remove speed and direction properties too ? Direction is used as is by some objects (e.g. player and monsters will look only on right without it) !", "Full clear ?");
         for (let i = 0; i < map.layerCount; i++) {
             current_layer = map.layerAt(i);
             if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
