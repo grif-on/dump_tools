@@ -95,6 +95,37 @@ tiled.extendMenu("Map", [
 
 
 
+const remove_temp_values_from_objects = tiled.registerAction("Remove _temp_ properties (objects)", function () {
+    let map = tiled.activeAsset;
+    map.macro("Remove _temp_ properties (objects)", function () {
+        let also_remove_flag_properties = tiled.confirm("Remove _term_ and _timer_ properties too ?\n_term_ and _timer_ properties are flags that necessary if you trying to load dumped level(that already runned for some time before being dumped) but they 100% unnecessary if you trying to load saved story mode level(that saved by game in first game tick) . Be careful though : we (D'LIRIUM developers) don't use these properties (manually on level start) in story mode , but there is no guarantee that other mappers won't .", "Full clear ?")
+        for (let i = 0; i < map.layerCount; i++) {
+            current_layer = map.layerAt(i);
+            if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
+                if (current_layer.objects != null) {                    //на случай , если слой не будет иметь объектов вообще
+                    current_layer.objects.forEach(function (processedObject) {
+                        let properties = processedObject.properties();
+                        for (const [key, value] of Object.entries(properties)) {
+                            if (key.includes("_temp_")) processedObject.removeProperty(key);
+                            if (also_remove_flag_properties && key.includes("_term_")) processedObject.removeProperty(key);
+                            if (also_remove_flag_properties && key.includes("_timer_")) processedObject.removeProperty(key);
+                        }
+                    });
+                }
+            }
+        }
+    });
+})
+
+remove_temp_values_from_objects.text = "Remove _temp_ properties (objects)";
+remove_temp_values_from_objects.icon = "ext:aaaaaaaaa.png";
+
+tiled.extendMenu("Map", [
+    { action: "Remove _temp_ properties (objects)", before: "SelectNextTileset" }
+]);
+
+
+
 const remove_builtins_from_objects = tiled.registerAction("Remove engine built-in properties (objects)", function () {
     let map = tiled.activeAsset;
     map.macro("Remove engine built-in properties (objects)", function () {
@@ -211,6 +242,10 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     This tool will itterate over all your objects and delete every property with same values as in object types .\n\
     Simply say - it will turn all dark properties in to grey if such property have default value .\n\
     Note , colors properties are not affected .\n\
+    \n\
+    =====Remove _temp_ properties (objects)=====\n\
+    This tool will itterate over all your objects and delete any property that contain \"_temp_\" in it's name ? Temp properties is a cache and they are fully restorble so you can get rid of them them safely .\n\
+    You can also remove properties that contains \"_term_\" and \"_timer_\" in their name . Term and timer properties contains states of entities , so if you are just want to clean saved STORY map , you can safely delete them . But if you want to tinker around dumped level you are trongly recomended to keep terms and timers .\n\
     \n\
     =====Remove engine built-in properties (objects)=====\n\
     This tool will itterate over all your objects and delete this list of properties [xprevious, yprevious, xstart, ystart, alarm, depth, sprite_index, image_alpha, image_angle, image_blend, image_index, image_speed, mask_index, sprite_width, sprite_height, sprite_xoffset, sprite_yoffset, image_number, bbox_bottom, bbox_left, bbox_right, bbox_top ] .\n\
