@@ -228,6 +228,42 @@ tiled.extendMenu("Map", [
     { action: "Remove !!!non_json!!! properties (objects and global)", before: "SelectNextTileset" }
 ]);
 
+const select_all_objects_wich_does_not_have_non_default_properties = tiled.registerAction("Select all objects wich does not have non default properties", function () {
+    let map = tiled.activeAsset;
+    for (let i = 0; i < map.layerCount; i++) {
+        current_layer = map.layerAt(i);
+        if (current_layer.isObjectLayer) {                          //игнорировать необъектные слои
+            if (current_layer.objects != null) {                    //на случай , если слой не будет иметь объектов вообще
+                current_layer.objects.forEach(function (processedObject) {
+                    let originalProperties = processedObject.properties();
+                    let all_properties_have_default_value = true;
+                    for (const [key, value] of Object.entries(originalProperties)) {
+                        
+                        processedObject.removeProperty(key); // remove property
+                        let defaultProperty = processedObject.resolvedProperty(key); // get default value
+                        processedObject.setProperty(key, value); // return property back
+                        
+                        if (!(defaultProperty === value || ((typeof (defaultProperty) === "object") && (defaultProperty.value === value || defaultProperty.value === value.value)))) { //property have non-default value
+                            all_properties_have_default_value = false;
+                        }
+                        
+                    }
+                    if (all_properties_have_default_value) {
+                        processedObject.selected = true;
+                    }
+                });
+            }
+        }
+    }
+})
+
+select_all_objects_wich_does_not_have_non_default_properties.text = "Select all objects wich does not have non default properties";
+select_all_objects_wich_does_not_have_non_default_properties.icon = "ext:selection.png";
+
+tiled.extendMenu("Map", [
+    { action: "Select all objects wich does not have non default properties", before: "SelectNextTileset" }
+]);
+
 
 
 const select_all_objects_with_not_classic_sorts = tiled.registerAction("Select all objects with non classic sorts", function () {
@@ -266,6 +302,7 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     let message = "\t     \"Dump tools\" by Grif_on .\n\
     Main purpose of thous tools is to automatize work with D'LIRIUM dubug/dump files .\n\
     But even if you made your map from scratch , you may found them useful .\n\
+    This message also printed in to tiled console log .\n\
     \n\
     =====Make all objects visible=====\n\
     This tool is only for objects , however please keep in mind that layers have sepparate visible property too .\n\
@@ -287,12 +324,16 @@ const about_dump_tools = tiled.registerAction("About dump tools", function () {
     This tool will itterate over all your objects and delete any property wich ends with one of following [!!!ARRAY!!!, !!!UNDEFINED!!!, !!!INFINITY!!!, !!!NAN!!!, !!!STRUCT!!!, !!!METHOD!!!, !!!UNKNOWN!!!] .\n\
     Your map will never (and should not) have this properties , they appear only in full dump that created when game crashed . They have string type and altered names because tiled map format didn't support any of them .\n\
     \n\
+    =====Select all objects wich does not have non default properties=====\n\
+    This tool will itterate over all your objects and select objects that does not have any user defined properties .\n\
+    Helpfull if you need to find objects in wich you didn't change any property .\n\
+    Note - your previous selection is not cleared .\n\
+    \n\
     =====Select all objects with non classic sorts=====\n\
     This tool will itterate over all your objects and select objects that have e_sort_method != \"No Sorting\" (or e_sort_method != 0) .\n\
     Note - your previous selection is not cleared .\n\
     \n\
-    Github page of this script - https://github.com/grif-on/dump_tools .\n\n\
-    This message also printed in to tiled console log .";
+    Github page of this script - https://github.com/grif-on/dump_tools .";
     tiled.log("=".repeat(123) + "\n" + message + "\n" + "=".repeat(123));
     tiled.alert(message, "About dump tools");
 })
