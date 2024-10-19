@@ -254,7 +254,7 @@ const select_all_objects_with_not_classic_sorts = tiled.registerAction("Select a
 })
 
 select_all_objects_with_not_classic_sorts.text = "Select all objects with non classic sorts";
-select_all_objects_with_not_classic_sorts.icon = "ext:aaaaaaaaa.png";
+select_all_objects_with_not_classic_sorts.icon = "ext:selection.png";
 
 tiled.extendMenu("Map", [
     { action: "Select all objects with non classic sorts", before: "SelectNextTileset" }
